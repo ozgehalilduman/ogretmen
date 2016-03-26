@@ -2,20 +2,22 @@
 'use strict';
 
 angular.module('starter.services', [])
-.factory("islemler",function($rootScope,$state){
+.factory("islemler",function($rootScope,$state,$http,$localStorage){
   return{
     girisKontrol:function(bilgi)
     {
-      var ogretmen={"id":"1","ad":"Özge Halil","soyad":"DUMAN"}
-      if(bilgi.user=="ogrt"&&bilgi.paswd=="123")
-      {
-        return ogretmen;
-      }
-      else
-      {
-        return "Hata";
-      }
-    }
+      var $promise=$http.post('http://localhost:8080/telefon/user_kontrol.php',bilgi);
+      $promise.then(function(msg){
+          var d_bilgi=msg.data;
+          if(d_bilgi!="false"){
+            $localStorage.setNesne("ogretmen",d_bilgi);
+            $state.go('app.profile');
+          }
+          else{
+            alert("HATALI GİRİS");
+          }
+        });
+    }//girisKontrol:function(bilgi)
   }
 })
 .factory("$localStorage",function($window){

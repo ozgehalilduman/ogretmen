@@ -95,14 +95,7 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 
     $scope.girisYap=function(bilgi){
-      var sonuc=islemler.girisKontrol(bilgi);
-      if(sonuc=="Hata")
-      {
-        alert("HATALI GİRİS");
-      }else{
-        $localStorage.setNesne("ogretmen",sonuc);
-        $state.go("app.profile");
-      }
+      islemler.girisKontrol(bilgi);      
     };
 })
 

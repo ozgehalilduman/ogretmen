@@ -21,12 +21,12 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
     });
     //////////////////state değişimlerinin yakaladığım kısım
     $rootScope.$on('$stateChangeStart', function(event, toState, fromState) {
-      var ogrt=$localStorage.getNesne("ogretmen");      
-      if(toState.name!='app.login'&& !ogrt.id){
+      var ogrt=$localStorage.getNesne("ogretmen");
+      if(toState.name!='app.login'&& !ogrt.ogretmen_no){
         event.preventDefault();
         $state.go("app.login");
       }
-      if(toState.name=='app.login'&& ogrt.id){
+      if(toState.name=='app.login'&& ogrt.ogretmen_no){
         event.preventDefault();
         $state.go("app.profile");
       }
