@@ -1,0 +1,53 @@
+<ion-view view-title="DERSEKLEME">
+    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
+      <h4>{{active_ogrt.ad}} {{active_ogrt.soyad}}</h4>
+      <div class="item card-item">
+        <div class="card stable-bg ink ink-dark ">
+          <div class="item ">
+            <ion-slide-box active-slide="kacinciDers" does-continue="true">
+              <ion-slide ng-repeat="dersno in derssaatleri">
+                <div class="box">
+                  <div class="item item-icon-left item-icon-right" href="#">
+                    <i class="icon" ng-class="{'ion-chevron-left':dersno<derssaatleri.length?true:false}"></i>
+                    <span class="size-25 golge_siyah">{{dersno}}. DERS</span>
+                    <i class="icon" ng-class="{'ion-chevron-right':dersno>1?true:false}"></i>
+                  </div>
+                </div>
+              </ion-slide>
+            </ion-slide-box>
+            <button class="button button-full icon-right ion-chevron-down button-stable" load-list-message="Yükleniyor..." cancel-button="İptal" hide-reset="true" modal-select=""  modal-class="select_modal" header-footer-class="bar-dark" ng-model="secilenGun" options="gunler" modal-title="GUN SEÇ">
+              {{secilenGun.gun}}
+              <div class="option">
+                {{option.gun}}
+              </div>
+            </button>
+            <br>
+            <button class="button button-full icon-right ion-chevron-down button-stable"  has-search="true" search-placeholder="Ara" sub-header-class="bar-dark arama_modal" cancel-search-button="Sil" clear-search-on-select="false" load-list-message="Yükleniyor..." cancel-button="İptal" hide-reset="true" modal-select=""  modal-class="select_modal" header-footer-class="bar-dark" ng-model="secilenSinif" options="siniflar" modal-title="SINIF SEÇ">
+               {{secilenSinif.okulad}}  {{secilenSinif.seviye}}  {{secilenSinif.sube}}
+              <div class="option">
+                ({{option.okulad}} ) {{option.seviye}} - {{option.sube}}
+              </div>
+            </button>
+            <br>
+            <button class="button button-full icon-right ion-chevron-down button-stable" has-search="true"  search-placeholder="Ara" sub-header-class="bar-dark arama_modal" cancel-search-button="sil" load-list-message="Yükleniyor..." cancel-button="İptal" hide-reset="true" modal-select=""  modal-class="select_modal" header-footer-class="bar-dark" ng-model="secilenDers" options="dersler" modal-title="DERSİ SEÇ">
+              {{secilenDers.ders_ad}}
+              <div class="option">
+                {{option.ders_ad}}
+              </div>
+            </button>
+            <div>
+              <button class="button button-full button-balanced" ng-disabled="secilenGun.id==-1||secilenSinif.sinif_no==0||secilenDers.ders_no==0" ng-click="dersprog_ders_ekleme(active_ogrt.ogretmen_no,(kacinciDers+1),secilenGun.id,secilenSinif.sinif_no,secilenDers.ders_no);">KAYDET</button>
+            </div>
+            <h2 ng-hide="secilenGun.id==-1">{{secilenGun.gun}}</h2>
+            <div class="list card" ng-hide="secilenGun.id==-1">
+              <div class="item">
+                  <h2 class="dp_ekleme" ng-repeat="d in ders_prog|filter:{gun:secilenGun.id}">
+                    <span class="dsaati">{{d.derssaati}}.DERS</span><span class="dad"> {{d.drs}}</span><span class="dsinif">({{d.snf}})</span>
+                  </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+</ion-view>

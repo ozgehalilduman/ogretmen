@@ -1,0 +1,14 @@
+<ion-view view-title="HAFTALIK DERS PROGRAMI">
+    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
+        <div class="item card-item" ng-repeat="(key, value) in ders_prog|groupBy:'gun'">
+            <div class="card stable-bg ink ink-dark">
+              <h2 class="golge_siyah" style="color:#fff;font-size:20px;background-color: deepskyblue;padding:5px">{{gunler[key-1].gun}}</h2>
+                <div style="min-height:10px;padding-top:5px" class="item item-avatar item-text-wrap" ng-repeat="d in value">
+                    <span style="height:10px" class="avatar">{{d.derssaati}}.Ders</span>
+                    <strong>{{d.drs}}</strong>
+                    <span style="position:absolute;right:5%">{{d.snf}}</span>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -21,8 +21,14 @@
                 <ion-item nav-clear menu-close ui-sref="app.activity">
                     Activity
                 </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.login">
-                    Login
+                <ion-item nav-clear menu-close ui-sref="app.dersprogramim">
+                    DERS PROGRAMIM
+                </ion-item>
+                <ion-item ng-hide="active_ogrt.yetki==0" nav-clear menu-close ui-sref="app.dersprogekle">
+                    DERS PROG. DERS EKLEME
+                </ion-item>
+                <ion-item nav-clear menu-close ng-click="cikisyap()">
+                    ÇIKIŞ YAP
                 </ion-item>
                 <ion-item nav-clear menu-close ui-sref="app.profile">
                     Profile

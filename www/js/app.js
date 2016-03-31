@@ -3,8 +3,8 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js2
-angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'ionic-material', 'ionMdInput'])
+// 'starter.controllers' is found in controllers.js
+angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'ionic-material', 'ionMdInput','ionic-datepicker','ionic-modal-select','angular.filter'])
 
 .run(function($ionicPlatform,$rootScope,$localStorage,$state) {
     $ionicPlatform.ready(function() {
@@ -19,15 +19,26 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
             StatusBar.styleDefault();
         }
     });
+    //gunler ile ilgili rootScope u ayarlıyorum
+    $rootScope.gunler = [{'id':'1','gun':'Pazartesi','g':'Pt'},
+                     {'id':'2','gun':'Salı','g':'Sl'},{'id':'3','gun':'Çarşamba','g':'Çr'},
+                     {'id':'4','gun':'Perşembe','g':'Pr'},{'id':'5','gun':'Cuma','g':'Cm'},
+                     {'id':'6','gun':'Cumartesi','g':'Ct'},{'id':'0','gun':'Pazar','g':'Pz'}];
+    //ders saatleri ile ilgili
+    $rootScope.derssaatleri=[1,2,3,4,5,6,7,8,9,10];
     //////////////////state değişimlerinin yakaladığım kısım
     $rootScope.$on('$stateChangeStart', function(event, toState, fromState) {
       var ogrt=$localStorage.getNesne("ogretmen");
+      var dp=$localStorage.getNesne("dersprog");
+      $rootScope.active_ogrt=ogrt;
+      $rootScope.ders_prog=dp;
       if(toState.name!='app.login'&& !ogrt.ogretmen_no){
         event.preventDefault();
         $state.go("app.login");
       }
       if(toState.name=='app.login'&& ogrt.ogretmen_no){
         event.preventDefault();
+
         $state.go("app.profile");
       }
     });
@@ -116,6 +127,30 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
             }
         }
     })
+    .state('app.dersprogekle', {
+        url: '/dersprogekle',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/dersprogekle.html',
+                controller: 'dersprogekleCtrl'
+            },
+            'fabContent': {
+                template: ''
+            }
+        }
+    })
+    .state('app.dersprogramim', {
+        url: '/dersprogramim',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/dersprogramim.html',
+                controller: 'dersprogramimCtrl'
+            },
+            'fabContent': {
+                template: ''
+            }
+        }
+    })
 
     .state('app.profile', {
         url: '/profile',
@@ -125,7 +160,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                 controller: 'ProfileCtrl'
             },
             'fabContent': {
-                template: '<button id="fab-profile" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',
+                template: '<button id="fab-profile" ng-hide="active_ogrt.yetki==0" ui-sref="app.dersprogekle" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',
                 controller: function ($timeout) {
                     /*$timeout(function () {
                         document.getElementById('fab-profile').classList.toggle('on');
@@ -138,4 +173,24 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/login');
-});
+})
+//datepicker ın config dosyası
+.config(function (ionicDatePickerProvider) {
+    var datePickerObj = {
+      inputDate: new Date(),
+      setLabel: 'Sec',
+      todayLabel: 'Bugun',
+      closeLabel: 'Kapat',
+      mondayFirst: true,
+      weeksList: ["Pz", "Pt", "S", "Ç", "P", "C", "Ct"],
+      monthsList: ["Ock", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ags", "Eyl", "Eki", "Kas", "Ara"],
+      templateType: 'popup',
+      from: new Date(2015, 8, 1),
+      to: new Date(2018, 8, 1),
+      showTodayButton: true,
+      dateFormat: 'dd MMMM yyyy',
+      closeOnSelect: false,
+      disableWeekdays: [0,6]//pazarla cumartesiyi kapattım
+    };
+    ionicDatePickerProvider.configDatePicker(datePickerObj);
+  });
