@@ -38,7 +38,6 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
       }
       if(toState.name=='app.login'&& ogrt.ogretmen_no){
         event.preventDefault();
-
         $state.go("app.profile");
       }
     });
@@ -79,20 +78,15 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
         }
     })
 
-    .state('app.friends', {
-        url: '/friends',
+    .state('app.ogrenciler', {
+        url: '/ogrenciler',
         views: {
             'menuContent': {
-                templateUrl: 'templates/friends.html',
-                controller: 'FriendsCtrl'
+                templateUrl: 'templates/ogrenciler.html',
+                controller: 'OgrencilerCtrl'
             },
             'fabContent': {
-                template: '<button id="fab-friends" class="button button-fab button-fab-top-left expanded button-energized-900 spin"><i class="icon ion-chatbubbles"></i></button>',
-                controller: function ($timeout) {
-                    $timeout(function () {
-                        document.getElementById('fab-friends').classList.toggle('on');
-                    }, 900);
-                }
+                template: ''
             }
         }
     })
@@ -158,6 +152,24 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
             'menuContent': {
                 templateUrl: 'templates/profile.html',
                 controller: 'ProfileCtrl'
+            },
+            'fabContent': {
+                template: '<button id="fab-profile" ng-hide="active_ogrt.yetki==0" ui-sref="app.dersprogekle" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',
+                controller: function ($timeout) {
+                    /*$timeout(function () {
+                        document.getElementById('fab-profile').classList.toggle('on');
+                    }, 800);*/
+                }
+            }
+        }
+    })
+
+    .state('app.yoklamasinif', {
+        url: '/yoklamasinif/:tarih/:sinif/:ders/:saat',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/yoklamasinif.html',
+                controller: 'yoklamasinifCtrl'
             },
             'fabContent': {
                 template: '<button id="fab-profile" ng-hide="active_ogrt.yetki==0" ui-sref="app.dersprogekle" class="button button-fab button-fab-bottom-right button-energized-900"><i class="icon ion-plus"></i></button>',

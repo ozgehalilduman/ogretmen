@@ -13,6 +13,27 @@
 
 /* General
 ==================================*/
+.ogrenciYok{box-shadow:-5px 0px 14px red !important;}
+.ogrenciGec{box-shadow:-5px 0px 14px rgb(250, 210, 0) !important;}
+.ogrenciliste{
+		max-height: 55px !important;
+    max-width: 55px !important;
+		box-shadow:1px 1px 3px #000;
+	}
+.yokogrencilerkismi{height:70px;}
+.yokogrenciyeri{
+	border-top:1px solid #ccc;
+		margin-top: 32px;
+    height: 40px;
+		}
+.option-modifiye{min-height:200px;background-color:yellow !important}
+.option-resimyeri{position:relative; }
+.option-resim{position:absolute; top:-15px;left:10px;height:52px;border-radius:50%}
+.option-yazi{margin-left:70px;}
+.ogrDetay-resimyeri{position:relative; }
+.ogrDetay-resim{border-radius:50%;}
+.ogrDetay-temel{position:absolute;top:0px;left:110px;}
+.ogrDetay-detay{}
 .hero h1 {
     color: #fff;
     /*text-shadow: 0 1px 0px #000;*/
@@ -23,13 +44,19 @@
 }
 .size-25{font-size:25px}
 .golge_siyah{text-shadow: 1px 2px 1px #000;}
+.golge_siyah2{text-shadow: 1px 1px 4px #000;}
 .logininput{
 	width: 95% ;
 }
 /*ders programını olduğu kısım*/
 .dp_ekleme{border-bottom:1px solid #ccc;font-size:14px !important}
 .dsaati{position: absolute;left:3%;}
-.dad{margin:17%}
+.dad{    width: 81%;
+    margin: 1px 3%;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;}
 .dsinif{position: absolute;right:5%}
 .select_modal>ion-header-bar>h1.title{width: 200px !important;text-shadow:2px 2px 1px #ccc;margin: 0px!important}
 .select_modal .item{border-bottom:1px solid #ccc}

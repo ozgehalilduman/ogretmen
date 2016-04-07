@@ -95,27 +95,77 @@ angular.module('starter.controllers', [])
         $scope.$parent.hideHeader();
     }, 0);
     ionicMaterialInk.displayEffect();
-
     $scope.girisYap=function(bilgi){
       islemler.girisKontrol(bilgi);
     };
 })
 
-.controller('FriendsCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {
+.controller('OgrencilerCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion,islemler) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.$parent.setHeaderFab('left');
-
     // Delay expansion
     $timeout(function() {
         $scope.isExpanded = true;
-        $scope.$parent.setExpanded(true);
+        $scope.$parent.setExpanded(false);
+    }, 300);
+    // Set Motion
+    ionicMaterialMotion.fadeSlideInRight();
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+    ///////
+    $scope.secilenGun ={'id':'-1','gun':'GUN SECİNİZ','g':''};
+    $scope.secilenSinif = {'sinif_no':'0','seviye':'SINIF SEÇİNİZ','sube':'','okulad':'','arama':''};
+    $scope.secilenOgrenci = {'ad':'OGRENCİ','soyad':' SECİNİZ'};
+    /*$scope.gunler = [{'id':'1','gun':'Pazartesi','g':'Pt'},
+                     {'id':'2','gun':'Salı','g':'Sl'},{'id':'3','gun':'Çarşamba','g':'Çr'},
+                     {'id':'4','gun':'Perşembe','g':'Pr'},{'id':'5','gun':'Cuma','g':'Cm'},
+                     {'id':'6','gun':'Cumartesi','g':'Ct'},{'id':'0','gun':'Pazar','g':'Pz'}];
+    */
+    $scope.ogrencileriGoster=false;
+    $scope.ogrenciDetayGoster=false;
+    $scope.siniflar = islemler.siniflariGetir($scope);
+    $scope.ogrenciDetayGosterF=function(yeni, eski)
+    {
+      $scope.ogrenciDetayGoster=true;
+    }
+    $scope.snfOgrencileriGetir = function(yeni, eski){
+        $scope.ogrenciler = islemler.ogrencileriGetir($scope,yeni.sinif_no);
+        $scope.ogrencileriGoster=true;
+    };
+
+    $scope.dersprog_ders_ekleme=function(ogrt,kacincisaat,gun,sinif,ders){
+      islemler.dersprogDersekle(ogrt,kacincisaat,gun,sinif,ders);
+    };
+    $scope.dersprog_ders_cikar=function(id,ogrt){
+      console.log(id);
+      islemler.dersprogDerscikar(id,ogrt);
+    };
+})
+.controller('yoklamasinifCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion,islemler) {
+    // Set Header
+    $scope.$parent.showHeader();
+    $scope.$parent.clearFabs();
+    $scope.$parent.setHeaderFab('left');
+    $scope.ogrenciler=islemler.sinifYoklamaGetir($scope,$stateParams);
+    $scope.ogrenciYok=false;
+    $scope.yoklama_al=function(ogr)
+    {
+      console.info($stateParams);
+      console.info(ogr);
+      $scope.ogrenciler=islemler.sinifYoklamaal($scope,$stateParams,ogr);
+    }
+    // Delay expansion
+
+    $timeout(function() {
+        $scope.isExpanded = true;
+        //$scope.$parent.setExpanded(true);
     }, 300);
 
     // Set Motion
     ionicMaterialMotion.fadeSlideInRight();
-
+    //console.info($stateParams);
     // Set Ink
     ionicMaterialInk.displayEffect();
 })
@@ -149,6 +199,10 @@ angular.module('starter.controllers', [])
   $scope.dersprog_ders_ekleme=function(ogrt,kacincisaat,gun,sinif,ders){
     islemler.dersprogDersekle(ogrt,kacincisaat,gun,sinif,ders);
   };
+  $scope.dersprog_ders_cikar=function(id,ogrt){
+    console.log(id);
+    islemler.dersprogDerscikar(id,ogrt);
+  };
 })
 
 .controller('ProfileCtrl', function($scope,islemler,$localStorage,$rootScope,$stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,ionicDatePicker) {
@@ -160,6 +214,7 @@ angular.module('starter.controllers', [])
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
     $scope.ogrtresim="img/ogretmen2.png";
+    $scope.YoklamasinifSec=function(s,d){$rootScope.sinif=s;$rootScope.ders=d;}
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
@@ -184,9 +239,8 @@ angular.module('starter.controllers', [])
     $scope.hangigun=$rootScope.gunler[d.getDay()-1];
     var ipObj1 = {
     callback: function (val) {  //Mandatory
-      //console.log('Return value from the datepicker popup is : ' + val, new Date(val));
-      $scope.secilenTrh=val;
       var d=new Date(val);
+      $scope.secilenTrh=val;
       $scope.hangigun=$rootScope.gunler[d.getDay()-1];
     },
     disabledDates: [            //Optional
@@ -217,7 +271,7 @@ angular.module('starter.controllers', [])
       new Date(1439676000000)
     ],
     from: new Date(2015, 1, 1), //Optional
-    to: new Date(2016, 10, 30), //Optional
+    to: Date.now(), //Optional YArının Yoklamasını almaya gerek yok değilmi...
     inputDate: new Date(),      //Optional
     mondayFirst: true,          //Optional
     disableWeekdays: [0,6],       //Optional
@@ -246,7 +300,7 @@ angular.module('starter.controllers', [])
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 })
-.controller('dersprogramimCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('dersprogramimCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk,islemler) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = true;

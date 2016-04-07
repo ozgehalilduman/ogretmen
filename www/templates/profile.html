@@ -11,10 +11,10 @@
             <a ui-sref="app.dersprogramim" class="tab-item">
                 <i class="icon ion-ios-calendar-outline"></i> Ders Programım
             </a>
-            <a ui-sref="app.friends" class="tab-item">
+            <a ui-sref="app.ogrenciler" class="tab-item">
                 <i class="icon ion-android-people"></i> Öğrenciler
             </a>
-            <a ui-sref="app.gallery" class="tab-item">
+            <a ng-hide="true" ui-sref="app.gallery" class="tab-item">
                 <i class="icon ion-ios-compose"></i> Yoklama Al
             </a>
         </div>
@@ -24,11 +24,11 @@
           </button>
 
         <div class="list">
-            <a class="item item-avatar item-icon-right" ng-repeat="d in ders_prog|filter:{gun:hangigun.id}">
-                <img src="img/material2.jpg" style="box-shadow: 0px 0px 5px #3F7BAF;">
-                <h2>{{hangigun.id}}-{{d.drs}} <span class="item-note">{{d.derssaati}}.Ders</span></h2>
-                <p>{{d.snf}} (5 kişi)</p>
-                <i class="icon ion-android-more-vertical"></i>
+            <a ui-sref="app.yoklamasinif({tarih:secilenTrh,sinif:d.sinif,ders:d.ders,saat:d.derssaati})" ng-click="YoklamasinifSec(d.snf,d.drs)" class="item item-avatar item-icon-right" ng-repeat="d in ders_prog|filter:{gun:hangigun.id}">
+                <img src="img/derssaati{{d.derssaati}}.png" style="box-shadow: 0px 0px 5px #3F7BAF;">
+                <h2>{{d.drs}}</h2>
+                <p>{{d.snf}}</p>
+                <i class="icon ion-compose"></i>
             </a>
 
         </div>

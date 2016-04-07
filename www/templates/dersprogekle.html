@@ -1,5 +1,5 @@
 <ion-view view-title="DERSEKLEME">
-    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
+    <ion-content ng-class="{expanded:isExpanded}" >
       <h4>{{active_ogrt.ad}} {{active_ogrt.soyad}}</h4>
       <div class="item card-item">
         <div class="card stable-bg ink ink-dark ">
@@ -42,7 +42,9 @@
             <div class="list card" ng-hide="secilenGun.id==-1">
               <div class="item">
                   <h2 class="dp_ekleme" ng-repeat="d in ders_prog|filter:{gun:secilenGun.id}">
-                    <span class="dsaati">{{d.derssaati}}.DERS</span><span class="dad"> {{d.drs}}</span><span class="dsinif">({{d.snf}})</span>
+                    <a href="" ng-click="dersprog_ders_cikar(d.id,active_ogrt.ogretmen_no)">
+                      <span class="dsaati">{{d.derssaati}}.</span><span class="dad">{{d.drs}}</span><span class="dsinif">({{d.snf}})</span>
+                    </a>
                   </h2>
               </div>
             </div>

@@ -1,0 +1,26 @@
+<ion-view view-title="YOKLAMA ALMA KISMI">
+  <div class="bar bar-subheader yokogrencilerkismi">
+    <h2 class="title">{{sinif}} {{ders}}</h2>
+    <div class="yokogrenciyeri">
+      <ion-scroll direction="x" style="height: 50px;">
+        <div class="button-bar">
+          <a class="button button-balanced ink-dark" ng-repeat="ogr in ogrenciler|filter:{ydurum:'1'}">
+            <span style="margin-left: -15px;">{{ogr.okulno}}</span>
+          </a>
+        </div>
+      </ion-scroll>
+    </div>
+  </div>
+  <ion-content ng-class="{expanded:isExpanded}">
+        <div class="content has-header">
+            <div class="list ">
+              <a href="#" ng-click="yoklama_al(ogr.tckno)" class="item item-avatar item-icon-right" ng-repeat="ogr in ogrenciler">
+                  <img ng-class="{'ogrenciYok':ogr.ydurum==1,'ogrenciGec':ogr.ydurum==2}" class="ogrenciliste" src="{{ogr.resim}}">
+                  <h2>{{ogr.okulno}}</h2>
+                  <p>{{ogr.ad}} {{ogr.soyad}}</p>
+                  <i ng-class="{'ion-alert assertive':ogr.ydurum==1,'ion-clock energized':ogr.ydurum==2,'ion-checkmark-round calm':ogr.ydurum!=1&&ogr.ydurum!=2}" class="icon  golge_siyah2"></i>
+              </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

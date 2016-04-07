@@ -14,15 +14,18 @@
     <ion-side-menu side="right">
         <ion-header-bar class="dark-bg expanded">
             <span class="avatar" style="background: url('img/crown.jpg'); background-size: cover;"></span>
-            <h2>Thronester</h2>
+            <h2>E-YOKLAMA</h2>
         </ion-header-bar>
         <ion-content class="stable-bg has-expanded-header">
             <ion-list>
-                <ion-item nav-clear menu-close ui-sref="app.activity">
-                    Activity
+                <ion-item nav-clear menu-close ui-sref="app.profile">
+                  YOKLAMA
                 </ion-item>
                 <ion-item nav-clear menu-close ui-sref="app.dersprogramim">
                     DERS PROGRAMIM
+                </ion-item>
+                <ion-item nav-clear menu-close ui-sref="app.ogrenciler">
+                    ÖĞRENCİLER
                 </ion-item>
                 <ion-item ng-hide="active_ogrt.yetki==0" nav-clear menu-close ui-sref="app.dersprogekle">
                     DERS PROG. DERS EKLEME
@@ -30,13 +33,10 @@
                 <ion-item nav-clear menu-close ng-click="cikisyap()">
                     ÇIKIŞ YAP
                 </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.profile">
-                    Profile
+                <ion-item ng-hide="true" nav-clear menu-close ui-sref="app.activity">
+                    Activity
                 </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.friends">
-                    Friends
-                </ion-item>
-                <ion-item nav-clear menu-close ui-sref="app.gallery">
+                <ion-item ng-hide="true" nav-clear menu-close ui-sref="app.gallery">
                     Gallery
                 </ion-item>
             </ion-list>

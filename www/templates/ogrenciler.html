@@ -1,0 +1,41 @@
+<ion-view view-title="ÖĞRENCİLER">
+  <ion-content ng-class="{expanded:isExpanded}" >
+    <div>
+      <button  class="button button-full icon-right ion-chevron-down button-stable"  on-select="snfOgrencileriGetir(newValue, oldValue)" has-search="true" search-placeholder="Ara" sub-header-class="bar-dark arama_modal" cancel-search-button="Sil" clear-search-on-select="false" load-list-message="Yükleniyor..." cancel-button="İptal" hide-reset="true" modal-select=""  modal-class="select_modal" header-footer-class="bar-dark" ng-model="secilenSinif" options="siniflar" modal-title="SINIF SEÇ">
+         {{secilenSinif.okulad}}  {{secilenSinif.seviye}}  {{secilenSinif.sube}}
+        <div class="option">
+          ({{option.okulad}} ) {{option.seviye}} - {{option.sube}}
+        </div>
+      </button>
+      <br>
+      <button ng-show="ogrencileriGoster" class="button button-full icon-right ion-chevron-down button-stable" on-select="ogrenciDetayGosterF(newValue, oldValue)"has-search="true"  search-placeholder="Ara" sub-header-class="bar-dark arama_modal" cancel-search-button="sil" load-list-message="Yükleniyor..." cancel-button="İptal" hide-reset="true" modal-select=""  modal-class="select_modal" header-footer-class="bar-dark" ng-model="secilenOgrenci" options="ogrenciler" modal-title="OGRENCİ SEÇ">
+        {{secilenOgrenci.ad}} {{secilenOgrenci.soyad}}
+        <div class="option option-modifiye">
+          <div class="option-resimyeri">
+            <img class="option-resim" src="{{option.resim}}" alt="">
+            <span class="option-yazi">{{option.okulno}} {{option.ad}} {{option.soyad}}</span>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="list card" ng-show="ogrenciDetayGoster">
+      <div class="item item-body">
+        <div class="ogrDetay-resimyeri">
+          <img class="ogrDetay-resim" src="{{secilenOgrenci.resim}}" alt="">
+          <span class="ogrDetay-temel">
+              <h2>{{secilenOgrenci.okulno}} {{secilenOgrenci.ad}} {{secilenOgrenci.soyad}}</h2>
+              <h3>S.KULUP : {{secilenOgrenci.sosyalkulup}} </h3>
+              <h3>PROJE   : {{secilenOgrenci.odev}}</h3>
+          </span>
+          <div class="ogrDetay-detay">
+            <div ng-repeat="b in secilenOgrenci.testsorucevap|filter:{cevaplayan:secilenOgrenci.tckno}">
+              <h4>{{b.sorumetni}}</h4>
+              <p>{{b.cevap}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
