@@ -15,6 +15,8 @@ angular.module('starter.services', [])
               $localStorage.setNesne("ogretmen",d_bilgi);
               $rootScope.active_ogrt=d_bilgi;
               $state.go('app.profile');
+            }else{
+              alert("HATALI GİRİŞ");
             }
           }
         );
@@ -54,16 +56,26 @@ angular.module('starter.services', [])
           }
         });
     },//ogretmenleriGetir:function(bilgi)
-    ogrencileriGetir:function(scope,snf)
+    ogrencileriGetir:function(scope)
     {
       $ionicLoading.show({ template: '<div><span style="position: relative;top: -10px;">Yükleniyor...</span><ion-spinner class="spinner-calm spinner" icon="ripple"/></div>'});
-      var $promise=$http.post('http://e-okulrehberlik.com/telefon/ogrenci_liste_getir.php',{'sinif':snf,'testId':76,'bironceki':true,'opt':3});
+      var $promise=$http.post('http://e-okulrehberlik.com/telefon/ogrenci_liste_getir.php',{'testId':0,'limit':1});
       $promise.then(function(msg){
           $ionicLoading.hide();
           scope.ogrenciler=msg.data;
           console.info(msg.data);
         });
     },//ogrencileriGetir:function(bilgi)
+    ogrenciDetayGetir:function(scope,tc)
+    {
+      $ionicLoading.show({ template: '<div><span style="position: relative;top: -10px;">Yükleniyor...</span><ion-spinner class="spinner-calm spinner" icon="ripple"/></div>'});
+      var $promise=$http.post('http://e-okulrehberlik.com/telefon/ogrencitestcevapgetir.php',{'test':76,'tc':tc});
+      $promise.then(function(msg){
+          $ionicLoading.hide();
+          scope.ogrenciDetay=msg.data;
+          console.info(msg.data);
+        });
+    },//ogrenciDetayGetir:function(bilgi)
     sinifYoklamaGetir:function(scope,p)
     {
       $ionicLoading.show({ template: '<div><span style="position: relative;top: -10px;">Yükleniyor...</span><ion-spinner class="spinner-calm spinner" icon="ripple"/></div>'});
@@ -112,7 +124,6 @@ angular.module('starter.services', [])
     {
       var $promise=$http.post('http://e-okulrehberlik.com/telefon/dersprogGetir.php',{'ogrt':ogrt});
       $promise.then(function(msg){
-          console.info(msg.data);
           var bilgi=msg.data;
           $localStorage.setNesne('dersprog',bilgi);
           $rootScope.ders_prog=msg.data;

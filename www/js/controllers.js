@@ -100,7 +100,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('OgrencilerCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion,islemler) {
+.controller('OgrencilerCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion,islemler,$ionicModal) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -115,25 +115,31 @@ angular.module('starter.controllers', [])
     // Set Ink
     ionicMaterialInk.displayEffect();
     ///////
-    $scope.secilenGun ={'id':'-1','gun':'GUN SECİNİZ','g':''};
-    $scope.secilenSinif = {'sinif_no':'0','seviye':'SINIF SEÇİNİZ','sube':'','okulad':'','arama':''};
+    //modal kısmı
+    $ionicModal.fromTemplateUrl('ogrencidetaymodal.html', {
+          scope: $scope,
+          animation: 'slide-in-up'
+        }).then(function(modal) {
+          $scope.modal = modal;
+        });
+    $scope.ogrDetayModal=function(){
+      $scope.modal.show();
+    };
+    ////
     $scope.secilenOgrenci = {'ad':'OGRENCİ','soyad':' SECİNİZ'};
     /*$scope.gunler = [{'id':'1','gun':'Pazartesi','g':'Pt'},
                      {'id':'2','gun':'Salı','g':'Sl'},{'id':'3','gun':'Çarşamba','g':'Çr'},
                      {'id':'4','gun':'Perşembe','g':'Pr'},{'id':'5','gun':'Cuma','g':'Cm'},
                      {'id':'6','gun':'Cumartesi','g':'Ct'},{'id':'0','gun':'Pazar','g':'Pz'}];
     */
-    $scope.ogrencileriGoster=false;
+    $scope.ogrencileriGoster=true;
     $scope.ogrenciDetayGoster=false;
-    $scope.siniflar = islemler.siniflariGetir($scope);
+    $scope.ogrenciler = islemler.ogrencileriGetir($scope);
     $scope.ogrenciDetayGosterF=function(yeni, eski)
     {
+      $scope.ogrenciDetay=islemler.ogrenciDetayGetir($scope,yeni.tckno);
       $scope.ogrenciDetayGoster=true;
     }
-    $scope.snfOgrencileriGetir = function(yeni, eski){
-        $scope.ogrenciler = islemler.ogrencileriGetir($scope,yeni.sinif_no);
-        $scope.ogrencileriGoster=true;
-    };
 
     $scope.dersprog_ders_ekleme=function(ogrt,kacincisaat,gun,sinif,ders){
       islemler.dersprogDersekle(ogrt,kacincisaat,gun,sinif,ders);
